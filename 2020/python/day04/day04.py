@@ -1,49 +1,74 @@
 import re
 import time
 
-def check_slope(data, slope):
-    cols = len(data[0])
-    rows = len(data)
-    r = c = 0
-    trees = 0
-    while r < rows:
-        if data[r][c] == '#':
-            trees += 1
-        r += slope[0]
-        c = (c + slope[1]) % cols
 
-    return trees
+def validate_passports(data):
+    passports = [0, 0]
+    for line in data:
+        if 'byr' in line and \
+                'iyr' in line and \
+                'eyr' in line and \
+                'hgt' in line and \
+                'hcl' in line and \
+                'ecl' in line and \
+                'pid' in line:
+            # 'cid' in line and \
+            passports[0] += 1
+        else:
+            continue
+
+    #     part two
+        if not 1920 <= int(line['byr']) <= 2002:
+            continue
+        if not 2010 <= int(line['iyr']) <= 2020:
+            continue
+        if not 2020 <= int(line['eyr']) <= 2030:
+            continue
+        if line['hgt'].endswith('cm'):
+            if not 150 <= int(line['hgt'][:-2]) <= 193:
+                continue
+        elif line['hgt'].endswith('in'):
+            if not 59 <= int(line['hgt'][:-2]) <= 76:
+                continue
+        else:
+            continue
+        if not re.fullmatch(r'#[0-9a-f]{6}', line['hcl']):
+            continue
+        if line['ecl'] not in ('amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'):
+            continue
+        if not re.fullmatch(r'[0-9]{9}', line['pid']):
+            continue
+
+        passports[1] += 1
+
+    return passports
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    # read in the input file as a list of key value pairs aka python dictionary
+    data = [{
+        (key := l.split(":"))[0]: key[1]
+        for l in line.replace("\n", " ").strip().split(" ")
+    }
+    for line in open('../../input/day04/input.txt').read().strip().split('\n\n')]
+    # for line in open('../../input/day04/input-test01.txt').read().strip().split('\n\n')]
+    # for line in open('../../input/day04/input-test02.txt').read().strip().split('\n\n')]
 
-    # read in the input file as a list of ints
-    data = [line for line in open('input.txt').read().strip().split('\n')]
+    # for line in data:
+    #     print(line)
+    #
+    # exit(0)
 
-
+    # test data
     t = time.perf_counter()
-    # first thoughts
-    # get the length of the line and treat this as a modular arithmetic to wrap around when counting to the right
-    trees = check_slope(data, [1, 3])
-    print(f'Part 1: The number of trees encountered  is {trees}')
 
-    trees = 1
+    valid_pp = validate_passports(data)
+    # assert valid_pp == 2 # test data result
 
-    slopes = [
-        [1, 1],
-        [1, 3],
-        [1, 5],
-        [1, 7],
-        [2, 1],
-    ]
 
-    for slope in slopes:
-        trees *= check_slope(data, slope)
+    print(f'Part 1: The number of valid passports is {valid_pp[0]}')
 
-    # print(f'line len {length} rows {rows}')
-    # print(data)
-
-    print(f'Part 2: The number of multiplied trees is {trees}')
+    # valid_pp = validate_data(data)
+    # assert valid_pp[1] == 4 # test data result
+    print(f'Part 2: The number of valid passports is {valid_pp[1]}')
     print(f'Time taken {time.perf_counter() - t} seconds')
-
-    # part two
