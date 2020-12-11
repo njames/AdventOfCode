@@ -1,10 +1,11 @@
 import re
 import time
+import numpy as np
 
 
 def find_seat(data):
     seats = []
-    result = [0,0]
+    result = [0, 0]
 
     boarding_row = 0
     for row in data:
@@ -21,14 +22,30 @@ def find_seat(data):
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # read in the input file as a list of strings
-    data = [line for line in open('../../input/day05/input.txt').read().strip().split('\n')]
-    # data = [line for line in open('../../input/day05/input-test01.txt').read().strip().split('\n')]
-    # data = [line for line in open('../../input/day05/input-test02.txt').read().strip().split('\n')]
+    # Transform occupied from # -> 1
+    # Transform unoccupied from L -> 0
+    # Transform floor  from . -> ' '
+    # data = [line for line in open('../../input/day11/input.txt').read().strip().split('\n')]
+    data = [line for line in open('../../input/day11/input-test01.txt').read().strip().replace('L', '0').replace('#', '1').replace('.', ' ').split('\n')]
+    # data = [line for line in open('../../input/day11/input-test02.txt').read().strip().split('\n')]
+    # intData
+
+    intData = np.empty([len(data[0]), len(data)])
+
+    for x in range(len(data)):
+        for y in range(len(data[0])):
+            try:
+                intData[x][y] = int(data[x][y])
+            except ValueError:
+                intData[x][y] = None
+
+
+    print(intData)
+
 
     # for line in data:
     #     print(line)
-    # exit(0)
-
+    exit(0)
 
     # test data
     t = time.perf_counter()
