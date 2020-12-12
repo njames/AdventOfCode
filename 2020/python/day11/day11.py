@@ -6,11 +6,6 @@ import numpy as np
 def check_seats(input_map, floor):
     dim_x = int(len(input_map[0]))
     dim_y = int(len(input_map))
-
-    # print(input_map)
-    # print(floor)
-    # recursion_limit = 1000
-    # c = 0
     next_map = input_map.copy()
 
     while True:
@@ -21,12 +16,6 @@ def check_seats(input_map, floor):
                 sub_xu = min(x + 2, dim_x)
                 sub_yl = max(y - 1, 0)
                 sub_yu = min(y + 2, dim_y)
-
-                # print(input_map[sub_yl:sub_yu, sub_xl:sub_xu ])
-                # print()
-                # print([sub_xl, sub_xu, sub_yl, sub_yu])
-
-
 
                 sum_of_sub_square = sum(sum(input_map[sub_yl:sub_yu, sub_xl:sub_xu]))
 
@@ -43,14 +32,41 @@ def check_seats(input_map, floor):
         else:
             input_map = next_map.copy()
 
-    # if (next_input == input).all():  # or c > recursion_limit:
-    #     c += 1
-    # else:
-    #     check_seats(next_input)
-    #
-    # return next_input
-    #
 
+def check_seats_diagonal(input_map, floor):
+    dim_x = int(len(input_map[0]))
+    dim_y = int(len(input_map))
+    next_map = input_map.copy()
+
+
+    # create a set of tuples for the eight directions
+    directions = [ (1,0), (1, 1), (0,1), (-1, 1),
+                   (-1, 0), (-1, -1), (0, -1), (1, -1)
+                   ]
+    while True:
+        for y in range(dim_y):
+            for x in range(dim_x):
+
+                seat_count = 0
+                for d in directions:
+
+                    found = False
+                    while not found:
+                        try_count = 1
+                        try_x = x + (d[0] * try_count)
+                        try_y = y + (d[1] * try_count)
+                        if input_map[try_y][try_x] == 1:
+                            found = True
+                            seat_count += 1
+                        if input_map[try_y][try_x] == 0 and floor[try_y][try_x] != '.':
+                            found = True
+
+        if (next_map == input_map).all():
+            return next_map
+        else:
+            input_map = next_map.copy()
+
+    return next_map
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -78,9 +94,9 @@ if __name__ == '__main__':
     # print('input')
     # print(int_data)
     # print(data)
-    next_data = check_seats(int_data, data)
 
-    occupied_seats = int(sum(sum(next_data)))
+
+    occupied_seats = int(sum(sum(check_seats(int_data, data))))
 
     # test data
 
@@ -92,5 +108,7 @@ if __name__ == '__main__':
 
     # valid_pp = validate_data(data)
     # assert valid_pp[1] == 4 # test data result
-    print(f'Part 2: The seat is {0}')
+
+    occupied_seats = int(sum(sum(check_seats_diagonal(int_data, data))))
+    print(f'Part 2: The seat is {occupied_seats}')
     print(f'Time taken {time.perf_counter() - t} seconds')
