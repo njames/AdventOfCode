@@ -74,10 +74,10 @@ if __name__ == '__main__':
     # Transform occupied from # -> 1
     # Transform unoccupied from L -> 0
     # Transform floor  from . -> ' '
-    data = [line for line in
-            open('../../input/day11/input.txt').read().strip().replace('L', '0').replace('#', '1').split('\n')]
     # data = [line for line in
-    #         open('../../input/day11/input-test01.txt').read().strip().replace('L', '0').replace('#', '1').split('\n')]
+    #         open('../../input/day11/input.txt').read().strip().replace('L', '0').replace('#', '1').split('\n')]
+    data = [line for line in
+            open('../../input/day11/input-test01.txt').read().strip().replace('L', '0').replace('#', '1').split('\n')]
     # data = [line for line in open('../../input/day11/input-test02.txt').read().strip().split('\n')]
 
     t = time.perf_counter()
