@@ -42,7 +42,7 @@ if __name__ == '__main__':
     # data = [line for line in
             # open('../../input/day16/input-test01.txt').read().strip().split('\n')]
 
-    data = [line for line in open('../../input/day16/input.txt').read().strip().split('\n')]
+        data = [line for line in open('../../input/day16/input.txt').read().strip().split('\n')]
 
     # fields = {'class' : [0, 3], [9, 10]} <- get data in this shape
 
