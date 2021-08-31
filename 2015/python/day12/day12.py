@@ -1,9 +1,6 @@
 import time
+import re
 import json
-
-path = []
-sum = 0
-
 
 # this isnt working right now
 # def walk(d):
@@ -29,24 +26,14 @@ sum = 0
 if __name__ == '__main__':
     # get input
     file = open('../../input/day12/input.json').read()
-    # data = json.loads(file)
-    data = json.loads(json.dumps('[1,2,3]'))
-    # data =  json.dumps({"a":2,"b":4})
+    data = json.dumps(file)
+
     t = time.perf_counter()
+
     # part one
-    # up = data.count('(')
-    # down = data.count(')')
-    # print(f"The sum is {walk(data)}")
-    # print(data)
-    print(len(data.values()))
+    nums = [ int(x) for x in re.findall(r'(-?\d+)', data)]
+    print(f'part one {sum(nums)}')
+
     # part two
-    # floor = 0
-    # position = 0
-    # for c in data:
-    #     position += 1
-    #     floor = floor + 1 if c == '(' else floor - 1
-    #     if floor == -1:
-    #         print(f'Entered that basement at position {position}')
-    #         print(f'Time taken {time.perf_counter() - t} seconds')
-    #         exit(0)
-    #
+    data = json.loads(data)
+
