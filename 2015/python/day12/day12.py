@@ -3,24 +3,26 @@ import re
 import json
 
 # this isnt working right now
-# def walk(d):
-#     global path, sum
-#     for k, v in d.items():
-#         if isinstance(v, int):
-#             path.append(k)
-#             sum = sum + int(v)
-#             path.pop()
-#         elif v is None:
-#             path.append(k)
-#             ## do something special
-#             path.pop()
-#         elif isinstance(v, dict):
-#             path.append(k)
-#             walk(v)
-#             path.pop()
-#         # else:
-#         #     null
-#     return sum
+def walk(d):
+    global path, sum
+
+    if isinstance(d, dict):
+        for k, v in d.items():
+            if isinstance(v, int):
+                path.append(k)
+                sum = sum + int(v)
+                path.pop()
+            elif v is None:
+                path.append(k)
+                ## do something special
+                path.pop()
+            elif isinstance(v, dict):
+                path.append(k)
+                walk(v)
+                path.pop()
+    elif isinstance(d, list):
+        
+    return sum
 
 
 if __name__ == '__main__':
@@ -35,5 +37,8 @@ if __name__ == '__main__':
     print(f'part one {sum(nums)}')
 
     # part two
-    data = json.loads(data)
+    data = json.loads(file)
+
+    print(data)
+
 
