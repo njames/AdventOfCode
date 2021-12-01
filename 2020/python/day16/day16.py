@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     # read in the input file as a list of strings
     # data = [line for line in
-    #         open('../../input/day11/input.json').read().strip().replace('L', '0').replace('#', '1').split('\n')]
+    #         open('../../input/day11/input.txt').read().strip().replace('L', '0').replace('#', '1').split('\n')]
     # data = [line for line in
             # open('../../input/day16/input-test01.txt').read().strip().split('\n')]
 
