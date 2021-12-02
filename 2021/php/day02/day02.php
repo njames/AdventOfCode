@@ -3,7 +3,8 @@
     // set up some vars
     $depth = 0;
     $distance = 0;
-    $aim = 0; //  
+    $aim = 0; //  adding for part 2
+    $depth_2 = 0;
 
 // lets use a PHP8.1 enum :)
     enum Steering: string
@@ -35,20 +36,24 @@
         switch ($direction[0]) {
             case Steering::down->value:
                $depth += (int)$direction[1];
+               $aim  += (int)$direction[1];
                break;
             case Steering::up->value:
                 $depth -= (int)$direction[1];
+                $aim  -= (int)$direction[1];
                 break;
             case Steering::forward->value:
                 $distance += (int)$direction[1];
+                $depth_2 += $aim * (int)$direction[1];
                 break;
             default:
                 echo "nothing matched {$distance[0]}  {$distance[1]} " . PHP_EOL;
 
         }
 //        echo "Current position {$distance} current depth {$depth}" .PHP_EOL;
+//            echo "Current position {$distance} current aim {$aim} current depth {$depth_2}" .PHP_EOL;
     }
 
 //    output the distance
     echo 'Part 1: ' . $distance * $depth . PHP_EOL;
-//    echo 'Part 2: ' . $rises_2 . PHP_EOL;
+    echo 'Part 2: ' . $distance * $depth_2 . PHP_EOL;
