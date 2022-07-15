@@ -4,7 +4,7 @@ import time
 
 def find_seat(data):
     seats = []
-    result = [0,0]
+    result = [0, 0]
 
     boarding_row = 0
     for row in data:
@@ -13,7 +13,13 @@ def find_seat(data):
         seats.append(boarding_row * 8 + boarding_seat)
 
     result[0] = max(seats)
-    print(seats)
+    seats.sort()
+    # find the missing number in the list from min to max
+    for x in range(len(seats) - 1):
+        if seats[x] + 1 != seats[x + 1]:
+            result[1] = seats[x] + 1
+
+    # print(seats)
 
     return result
 
@@ -28,7 +34,6 @@ if __name__ == '__main__':
     # for line in data:
     #     print(line)
     # exit(0)
-
 
     # test data
     t = time.perf_counter()
