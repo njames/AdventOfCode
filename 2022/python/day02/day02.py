@@ -3,6 +3,10 @@ from typing import List, Any
 
 # Press the green button in the gutter to run the script.
 
+# Turn Rock Paper Sissors into a comparison mod 3
+# R = 0 P = 1 S = 2
+# Win condition loser + 1 = winner
+# Loose condition winner - 1 = looser
 
 if __name__ == '__main__':
     # get input
