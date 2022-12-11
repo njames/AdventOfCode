@@ -5,8 +5,9 @@ from typing import List, Any
 
 # Turn Rock Paper Sissors into a comparison mod 3
 # R = 0 P = 1 S = 2
-# Win condition loser + 1 = winner
-# Loose condition winner - 1 = looser
+# Win condition loser + 1 = winner (6 points + score of choice (the mod 3 value + 1))
+# Loose condition winner - 1 = looser (3 points + score of choice (the mod 3 value + 1))
+# Draw winner = loser
 
 if __name__ == '__main__':
     # get input
