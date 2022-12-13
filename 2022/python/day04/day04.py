@@ -1,46 +1,45 @@
 import time
 from typing import List, Any
 
+
 # Press the green button in the gutter to run the script.
+
+def inside(x, y):
+    return int(x[0]) <= int(y[0]) and int(x[1]) >= int(y[1])
+
+
+def overlap(x, y):
+    return int(x[0]) <= int(y[0]) <= int(x[1]) <= int(y[1])
 
 
 if __name__ == '__main__':
     # get input
-    # data = [line.split(' ') for line in open('../../input/day02/test.txt').read().strip().split('\n')]
-    data = [line.split(' ') for line in open('../../input/day02/input02.txt').read().strip().split('\n')]
+    # data = [line.split(',') for line in open('../../input/day04/test.txt').read().strip().split('\n')]
+    data = [line.split(',') for line in open('../../input/day04/input04.txt').read().strip().split('\n')]
 
-    scores: list[int] = []
-    scores2: list[int] = []
-    for game in data:
-        o = ord(game[0]) - ord('A')
-        m = ord(game[1]) - ord('X')
+    assert inside([1, 10], [1, 10]) == True
+    assert inside([1, 2], [3, 4]) == False
 
-        # equal
-        if o == m:
-            scores.append(m + 1 + 3)
-            print(o, m, 'draw')
-        #     m wins
-        elif ((o + 1) % 3) == m:
-            scores.append(m + 1 + 6)
-            print(o, m, 'win')
-        else:
-            scores.append(m + 1)
-            print(o, m, 'loss')
+    insideData = []
+    overlapData = []
+    # print('part 1 ',sum(scores))
+    for line in data:
+        # print(line)
+        a, b = line[0].split('-'), line[1].split('-')
 
-    print('part 2 ',sum(scores))
+        print(a, b)
+        if inside(a, b) or inside(b, a):
+            print('inside')
+            insideData.append(1)
 
-    for game in data:
-        o = ord(game[0]) - ord('A')
-        m = ord(game[1]) - ord('X')
+        if overlap(a, b) or overlap(b, a) or inside(a, b) or inside(b, a):
+            print('overlap')
+            overlapData.append(1)
 
-        if m == 0: # lose
-            scores2.append(((o - 1) % 3) + 1)
-        elif m == 1: # draw
-            scores2.append(o + 1 + 3)
-        else: # win
-            scores2.append(((o + 1) % 3) + 1 + 6)
+    print('Part 1', sum(insideData))
+    print('Part 2', sum(overlapData))
 
-    print('part 2 ',sum(scores2))
+    # print('part 1 ',sum(scores2))
 
     # print('\n')
     # print(scores)
