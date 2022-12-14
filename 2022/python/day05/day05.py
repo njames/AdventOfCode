@@ -1,49 +1,79 @@
 import time
+import re
+from collections import deque
+
+# piles data
+#         [Q] [B]         [H]
+#     [F] [W] [D] [Q]     [S]
+#     [D] [C] [N] [S] [G] [F]
+#     [R] [D] [L] [C] [N] [Q]     [R]
+# [V] [W] [L] [M] [P] [S] [M]     [M]
+# [J] [B] [F] [P] [B] [B] [P] [F] [F]
+# [B] [V] [G] [J] [N] [D] [B] [L] [V]
+# [D] [P] [R] [W] [H] [R] [Z] [W] [S]
+#  1   2   3   4   5   6   7   8   9
+
+piles = [deque(''),
+         deque('DBJV'),
+         deque('PVBWRDF'),
+         deque('RGFLDCWQ'),
+         deque('WJPMLNDB'),
+         deque('HNBPCSQ'),
+         deque('RDBSNG'),
+         deque('ZBPMQFSH'),
+         deque('WLF'),
+         deque('SVFMR')
+         ]
+
+# test data
+# piles = [deque(),
+#          deque(['Z', 'N']),
+#          deque(['M', 'C', 'D']),
+#          deque(['P'])
+#          ]
+
 from typing import List, Any
 
+
 # Press the green button in the gutter to run the script.
+
+# currently taking the cheats way and manually contructing the input
+def move(num, fr, to):
+    for n in range(0, num):
+        piles[to].append(piles[fr].pop())
+    print(piles)
 
 
 if __name__ == '__main__':
     # get input
-    # data = [line.split(' ') for line in open('../../input/day02/test.txt').read().strip().split('\n')]
-    data = [line.split(' ') for line in open('../../input/day02/input02.txt').read().strip().split('\n')]
 
-    scores: list[int] = []
-    scores2: list[int] = []
-    for game in data:
-        o = ord(game[0]) - ord('A')
-        m = ord(game[1]) - ord('X')
+    #    [D]
+    # [N][C]
+    # [Z][M][P]
+    #  1  2  3
 
-        # equal
-        if o == m:
-            scores.append(m + 1 + 3)
-            print(o, m, 'draw')
-        #     m wins
-        elif ((o + 1) % 3) == m:
-            scores.append(m + 1 + 6)
-            print(o, m, 'win')
-        else:
-            scores.append(m + 1)
-            print(o, m, 'loss')
+    # data = [line for line in open('../../input/day05/test.txt').read().strip().split('\n')]
+    data = [line for line in open('../../input/day05/input05.txt').read().strip().split('\n')]
 
-    print('part 2 ',sum(scores))
+    # print('part 2 ',sum(scores2))
 
-    for game in data:
-        o = ord(game[0]) - ord('A')
-        m = ord(game[1]) - ord('X')
+    for line in data:
+        pattern = '\D*(\d*)\D*(\d*)\D*(\d*)'
+        match = re.search(pattern, line)
+        # print('match ', match.group(1), match.group(2), match.group(3)) // part 1
+        a, b, c = int(match.group(1)), int(match.group(2)), int(match.group(3))
+        move(a, b, 0) # move via 0 for part 2
+        move(a, 0, c)
 
-        if m == 0: # lose
-            scores2.append(((o - 1) % 3) + 1)
-        elif m == 1: # draw
-            scores2.append(o + 1 + 3)
-        else: # win
-            scores2.append(((o + 1) % 3) + 1 + 6)
+    print('\n\n')
+    for l in range(1, len(piles)):
+        print(piles[l][-1], end="")
 
-    print('part 2 ',sum(scores2))
-
+    # print(piles)
     # print('\n')
-    # print(scores)
+    # print(data)
+
+    # move(1, 2, 1)
 
     t = time.perf_counter()
     # part one
