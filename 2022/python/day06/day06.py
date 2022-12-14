@@ -1,4 +1,5 @@
 import time
+from collections import deque
 from typing import List, Any
 
 # Press the green button in the gutter to run the script.
@@ -6,42 +7,26 @@ from typing import List, Any
 
 if __name__ == '__main__':
     # get input
-    # data = [line.split(' ') for line in open('../../input/day02/test.txt').read().strip().split('\n')]
-    data = [line.split(' ') for line in open('../../input/day02/input02.txt').read().strip().split('\n')]
+    # data = open('../../input/day06/test.txt').read()
+    data = open('../../input/day06/input06.txt').read()
 
-    scores: list[int] = []
-    scores2: list[int] = []
-    for game in data:
-        o = ord(game[0]) - ord('A')
-        m = ord(game[1]) - ord('X')
+    print(data)
+    print(len(data))
+    result = 0
+    # marker_length = 4 # part 1
+    marker_length = 14
+    max = len(data) - marker_length
+    count = 0
+    list = deque('', maxlen=marker_length)
 
-        # equal
-        if o == m:
-            scores.append(m + 1 + 3)
-            print(o, m, 'draw')
-        #     m wins
-        elif ((o + 1) % 3) == m:
-            scores.append(m + 1 + 6)
-            print(o, m, 'win')
-        else:
-            scores.append(m + 1)
-            print(o, m, 'loss')
+    while count < max and result < 1:
+        list.append(data[count])
+        if count >= marker_length and len(set(list)) == marker_length:
+            result = count + 1
 
-    print('part 2 ',sum(scores))
+        count += 1
 
-    for game in data:
-        o = ord(game[0]) - ord('A')
-        m = ord(game[1]) - ord('X')
-
-        if m == 0: # lose
-            scores2.append(((o - 1) % 3) + 1)
-        elif m == 1: # draw
-            scores2.append(o + 1 + 3)
-        else: # win
-            scores2.append(((o + 1) % 3) + 1 + 6)
-
-    print('part 2 ',sum(scores2))
-
+    print('Part 1: ', result)
     # print('\n')
     # print(scores)
 
